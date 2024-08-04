@@ -1,9 +1,9 @@
 import pickle
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RandomizedSearchCV
 from ml.data import process_data
-# TODO: add necessary import
 
-# Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
@@ -19,10 +19,40 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-   # TODO: implement the function
-    pass
+    # Create am instance of the model
+    model = RandomForestClassifier()
 
+    # Define the parameter grid
+    param_grid = {
+        'n_estimators': [int(x) for x in range(100, 1200, 100)],
+        'max_features': ['auto', 'sqrt', 'log2'],
+        'max_depth': [int(x) for x in range(10, 110, 10)] + [None],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4],
+        'bootstrap': [True, False]
+    }
 
+    # Set up the RandomizedSearchCV
+    randomized_search = RandomizedSearchCV(
+        estimator=model,
+        param_distributions=param_grid,
+        n_iter=100,  # Number of iterations to perform
+        scoring='accuracy',  # Evaluation metric
+        cv=3,  # 3-fold cross-validation
+        verbose=2,
+        random_state=42,
+        n_jobs=-1  # Use all available cores
+    )
+
+    # Fit the randomized search to the data
+    randomized_search.fit(X_train, y_train)
+    
+    # Get the best model from the search
+    best_model = randomized_search.best_estimator_
+
+    # Return the trained model
+    return best_model
+    
 def compute_model_metrics(y, preds):
     """
     Validates the trained machine learning model using precision, recall, and F1.
@@ -59,9 +89,9 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    # TODO: implement the function
-    pass
+    preds = model.predict(X)
 
+    return preds
 def save_model(model, path):
     """ Serializes model to a file.
 
@@ -72,13 +102,13 @@ def save_model(model, path):
     path : str
         Path to save pickle file.
     """
-    # TODO: implement the function
-    pass
+    pickle.dump(model, open(path, 'wb'))
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
-    # TODO: implement the function
-    pass
+    
+    loaded_model = pickle.load(open(path, 'rb'))
+    return loaded_model
 
 
 def performance_on_categorical_slice(
@@ -117,12 +147,17 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """
-    # TODO: implement the function
     X_slice, y_slice, _, _ = process_data(
-        # your code here
+        data[data[column_name] == slice_value],
+        categorical_features,
+        label = label,
+        training = False,
+        encoder = encoder,
+        lb = lb
+    )
         # for input data, use data in column given as "column_name", with the slice_value 
         # use training = False
     )
-    preds = # your code here to get prediction on X_slice using the inference function
+    preds = inference(model, X_slice)
     precision, recall, fbeta = compute_model_metrics(y_slice, preds)
     return precision, recall, fbeta

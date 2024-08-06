@@ -18,6 +18,14 @@ data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv(data_path)
 
+# Check the first few rows of the dataframe to ensure it's loaded correctly
+print("First few rows of the dataframe:")
+print(data.head())
+
+# Ensure the label column 'salary' exists
+if 'salary' not in data.columns:
+    raise ValueError("Label column 'salary' not found in the dataframe.")
+    
 # TODO: split the provided data to have a train dataset and a test dataset
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(
@@ -39,12 +47,14 @@ cat_features = [
 ]
 
 # TODO: use the process_data function provided to process the data.
+print("Processing training data...")
 X_train, y_train, encoder, lb = process_data(
     train,
     categorical_features=cat_features,
     training=True,
 )
 
+print("Processing test data...")
 X_test, y_test, _, _ = process_data(
     test,
     categorical_features=cat_features,

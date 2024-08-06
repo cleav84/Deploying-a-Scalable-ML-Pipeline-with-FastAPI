@@ -49,19 +49,20 @@ cat_features = [
 # TODO: use the process_data function provided to process the data.
 print("Processing training data...")
 X_train, y_train, encoder, lb = process_data(
-    train,
+    X=train,
     categorical_features=cat_features,
-    training=True,
+    label="salary",
+    training=True
 )
 
 print("Processing test data...")
 X_test, y_test, _, _ = process_data(
-    test,
+    X=test,
     categorical_features=cat_features,
     label="salary",
     training=False,
     encoder=encoder,
-    lb=lb,
+    lb=lb
 )
 
 # TODO: use the train_model function to train the model on the training dataset

@@ -55,6 +55,9 @@ def process_data(
     else:
         y = np.array([])
 
+    print(f"Label column ({label}) extracted with shape: {y.shape}")
+    print(f"First 5 labels: {y[:5]}")
+    
     X_categorical = X[categorical_features].values
     X_continuous = X.drop(*[categorical_features], axis=1)
 

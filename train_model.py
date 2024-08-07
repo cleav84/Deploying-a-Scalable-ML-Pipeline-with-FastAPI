@@ -72,7 +72,6 @@ print(f'Encoder saved to {encoder_path}')
 model = load_model(
     model_path
 )
-print(f'Loading model from model/model_path')
 
 # TODO: use the inference function to run the model inferences on the test dataset.
 preds = inference(model, X_test)

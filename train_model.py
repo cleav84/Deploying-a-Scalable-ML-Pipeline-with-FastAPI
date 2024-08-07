@@ -63,7 +63,7 @@ model = train_model(X_train, y_train)
 # save the model and the encoder
 model_path = os.path.join(project_path, "model", "model.pkl")
 save_model(model, model_path)
-print(f'Model saved to model/{model_path}'))
+print(f'Model saved to model/{model_path}')
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 print(f'Model saved to model/{l_path}'))

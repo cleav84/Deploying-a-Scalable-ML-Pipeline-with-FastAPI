@@ -36,7 +36,7 @@ def train_model(X_train, y_train):
     randomized_search = RandomizedSearchCV(
         estimator=model,
         param_distributions=param_grid,
-        n_iter=100,  # Number of iterations to perform
+        n_iter=25,  # Number of iterations to perform
         scoring='accuracy',  # Evaluation metric
         cv=3,  # 3-fold cross-validation
         verbose=2,

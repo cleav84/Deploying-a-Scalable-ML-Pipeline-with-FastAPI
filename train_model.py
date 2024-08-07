@@ -17,14 +17,6 @@ project_path = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv(data_path)
-
-# Check the first few rows of the dataframe to ensure it's loaded correctly
-print("First few rows of the dataframe:")
-print(data.head())
-
-# Ensure the label column 'salary' exists
-if 'salary' not in data.columns:
-    raise ValueError("Label column 'salary' not found in the dataframe.")
     
 # TODO: split the provided data to have a train dataset and a test dataset
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
@@ -66,11 +58,14 @@ X_test, y_test, _, _ = process_data(
 )
 
 # TODO: use the train_model function to train the model on the training dataset
+print("Training the model...")
 model = train_model(X_train, y_train)
 
 # save the model and the encoder
+print("Saving the model...")
 model_path = os.path.join(project_path, "model", "model.pkl")
 save_model(model, model_path)
+print("Saving the encoder...")
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
 

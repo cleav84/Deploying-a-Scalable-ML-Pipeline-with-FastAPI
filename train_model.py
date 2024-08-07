@@ -1,8 +1,6 @@
 import os
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
-
 from ml.data import process_data
 from ml.model import (
     compute_model_metrics,
@@ -12,6 +10,7 @@ from ml.model import (
     save_model,
     train_model,
 )
+
 # TODO: load the cencus.csv data
 project_path = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(project_path, "data", "census.csv")
@@ -62,17 +61,18 @@ print("Training the model...")
 model = train_model(X_train, y_train)
 
 # save the model and the encoder
-print("Saving the model...")
 model_path = os.path.join(project_path, "model", "model.pkl")
 save_model(model, model_path)
-print("Saving the encoder...")
+print(f'Model saved to model/{model_path}'))
 encoder_path = os.path.join(project_path, "model", "encoder.pkl")
 save_model(encoder, encoder_path)
+print(f'Model saved to model/{l_path}'))
 
 # load the model
 model = load_model(
     model_path
-) 
+)
+print(f'Loading model from model/model_path')
 
 # TODO: use the inference function to run the model inferences on the test dataset.
 preds = inference(model, X_test)

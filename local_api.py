@@ -24,7 +24,7 @@ data = {
     "native-country": "United-States",
 }
 
-r = requests.post("http://12.7.0.0.1:8000/predict", json=data)
+r = requests.post("http://12.7.0.0.1:8000/data", json=data)
 
 print(f"Status Code: {r.status_code}")
-print(f"Result: {r.json()['prediction']}")
+print(f"Result: {r.json()['result']}")

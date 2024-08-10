@@ -66,6 +66,7 @@ async def post_inference(data: Data):
         data_processed, _, _, _ = process_data(
             X=data,
             categorical_features=cat_features,
+            label=None,
             training=False
         )
         _inference = inference(data_processed, X_test)
@@ -74,3 +75,4 @@ async def post_inference(data: Data):
     except Exception as e:
         print("Error during processing:", str(e))
         raise HTTPException(status_code=500, detail="Internal Server Error")
+    

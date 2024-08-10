@@ -6,12 +6,9 @@ r = requests.get("http://127.0.0.1:8000")
 
 print(f"Status Code: {r.status_code}")
 
-#Print entire JSON response to inspect its structure
-print(f"Response JSON: {r.json()}")
-
 #Access and print the welcome message from the correct key
 result = r.json()
-print(f"Result: {result.get('Result', 'Key not found')}")
+print(f"Result: {result[0]}")
 
 data = {
     "age": 37,
@@ -30,7 +27,7 @@ data = {
     "native-country": "United-States",
 }
 
-r = requests.post("http://12.7.0.0.1:8000/data", json=data)
+r = requests.post("http://127.0.0.1:8000/data", json=data)
 
 print(f"Status Code: {r.status_code}")
 print(f"Result: {r.json().get('result', 'Key not found')}")

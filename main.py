@@ -39,7 +39,7 @@ app = FastAPI()
 @app.get("/")
 async def get_root():
     """ Say hello!"""
-    return {"Result: Hello from the API!"}
+    return {"Hello from the API!"}
 
 # TODO: create a POST on a different path that does model inference
 @app.post("/data/")
@@ -62,11 +62,15 @@ async def post_inference(data: Data):
         "sex",
         "native-country",
     ]
-    data_processed, _, _, _ = process_data(
-        X=data,
-        categorical_features=cat_features,
-        label='salary',
-        training=False
-    )
-    _inference = inference(data_processed, X_test)
-    return {"result": apply_label(_inference)}
+    try:
+        data_processed, _, _, _ = process_data(
+            X=data,
+            categorical_features=cat_features,
+            training=False
+        )
+        _inference = inference(data_processed, X_test)
+        print("Inference result:", result)
+        return {"result": apply_label(_inference)}
+    except Exception as e:
+        print("Error during processing:", str(e))
+        raise HTTPException(status_code=500, detail="Internal Server Error")

@@ -26,10 +26,10 @@ class Data(BaseModel):
     hours_per_week: int = Field(..., example=40, alias="hours-per-week")
     native_country: str = Field(..., example="United-States", alias="native-country")
 
-path = os.path.join(project_path, "model", "encoder.pkl")
+path = "model/encoder.pkl"
 encoder = load_model(path)
 
-path = os.path.join(project_path, "model", "model.pkl") 
+path = "model/model.pkl"
 model = load_model(path)
 
 # TODO: create a RESTful API using FastAPI
@@ -65,7 +65,7 @@ async def post_inference(data: Data):
     data_processed, _, _, _ = process_data(
         X=data,
         categorical_features=cat_features,
-        label=label,
+        label='salary',
         training=False
     )
     _inference = inference(data_processed, X_test)

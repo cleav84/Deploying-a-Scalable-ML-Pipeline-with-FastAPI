@@ -1,5 +1,3 @@
-import os
-
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
@@ -56,7 +54,7 @@ async def post_inference(data: Data):
     data_dict = data.dict()
     print("Received data:", data.dict())
     # DO NOT MODIFY: clean up the dict to turn it into a Pandas DataFrame.
-    # The data has names with hyphens and 
+    # The data has names with hyphens and
     # Python does not allow those as variable names.
     # Here it uses the functionality of FastAPI/Pydantic/etc to deal with this.
     data = {k.replace("_", "-"): [v] for k, v in data_dict.items()}

@@ -1,4 +1,3 @@
-import json
 import requests
 
 # Send a GET using the URL http://127.0.0.1:8000
@@ -6,7 +5,7 @@ r = requests.get("http://127.0.0.1:8000")
 
 print(f"Status Code: {r.status_code}")
 
-#Access and print the welcome message from the correct key
+# Access and print the welcome message from the correct key
 result = r.json()
 print(f"Result: {result[0]}")
 

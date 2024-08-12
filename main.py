@@ -46,6 +46,7 @@ async def get_root():
 async def post_inference(data: Data):
     # DO NOT MODIFY: turn the Pydantic model into a dict.
     data_dict = data.dict()
+    print("Received data:", data.dict())
     # DO NOT MODIFY: clean up the dict to turn it into a Pandas DataFrame.
     # The data has names with hyphens and Python does not allow those as variable names.
     # Here it uses the functionality of FastAPI/Pydantic/etc to deal with this.
@@ -62,17 +63,15 @@ async def post_inference(data: Data):
         "sex",
         "native-country",
     ]
-    try:
-        data_processed, _, _, _ = process_data(
-            X=data,
-            categorical_features=cat_features,
-            label=None,
-            training=False
-        )
-        _inference = inference(data_processed, X_test)
-        print("Inference result:", result)
-        return {"result": apply_label(_inference)}
-    except Exception as e:
-        print("Error during processing:", str(e))
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+    data_processed, _, _, _ = process_data(
+        X=data,
+        categorical_features=cat_features,
+        label=None,
+        training=False,
+        encoder=encoder,
+        lb=None
+    )
+    _inference = inference(model, data_processed)
+    return {"result": apply_label(_inference)}
+    
     

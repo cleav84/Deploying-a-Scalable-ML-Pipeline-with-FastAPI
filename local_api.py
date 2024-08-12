@@ -28,10 +28,6 @@ data = {
 }
 
 r = requests.post("http://127.0.0.1:8000/data", json=data)
-
+result = r.json()
 print(f"Status Code: {r.status_code}")
-try:
-    result = r.json()
-    print(f"Result: {result.get('result', 'Key not found')}")
-except ValueError:
-    print(f"Failed tp parse JSON response")
+print(f"Result: {result.get('result', 'Key not found')}")
